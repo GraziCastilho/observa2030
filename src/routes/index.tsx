@@ -27,7 +27,7 @@ const previews = [
       "Conheça a história, os objetivos e os eixos de atuação do Observa 2030 — Observatório Gaúcho da Agenda 2030 da Uergs.",
     cta: "Saiba mais sobre o projeto",
     href: "/sobre",
-    icon: "🎯",
+    icon: " ",
   },
   {
     title: "ODS",
@@ -35,7 +35,7 @@ const previews = [
       "Explore os 17 Objetivos de Desenvolvimento Sustentável da ONU e os 3 ODS adjacentes brasileiros, com objetivos e metas detalhadas.",
     cta: "Ver todos os ODS",
     href: "/ods",
-    icon: "🌐",
+    icon: " ",
   },
   {
     title: "Publicações",
@@ -43,7 +43,7 @@ const previews = [
       "Acesse artigos científicos, livros, capítulos de livros, relatórios técnicos e textos produzidos pela equipe do Observa 2030.",
     cta: "Ver publicações",
     href: "/publicacoes",
-    icon: "📚",
+    icon: " ",
   },
   {
     title: "Eventos",
@@ -51,7 +51,7 @@ const previews = [
       "Fique por dentro dos eventos, palestras, minicursos e ações extensionistas realizados ou com participação do Projeto Observa 2030.",
     cta: "Confira nossos eventos",
     href: "/eventos",
-    icon: "📅",
+    icon: " ",
   },
   {
     title: "Equipe",
@@ -59,7 +59,7 @@ const previews = [
       "Conheça a equipe de pesquisadores, docentes colaboradoras, discentes e bolsistas que integram o Projeto Observa 2030.",
     cta: "Conhecer a equipe",
     href: "/equipe",
-    icon: "👥",
+    icon: " ",
   },
   {
     title: "Parcerias",
@@ -67,7 +67,7 @@ const previews = [
       "O Observa 2030 atua em colaboração com redes de pesquisa e instituições comprometidas com o desenvolvimento sustentável.",
     cta: "Ver parcerias",
     href: "/parcerias",
-    icon: "🤝",
+    icon: " ",
   },
 ] as const;
 
@@ -75,8 +75,8 @@ function Index() {
   return (
     <SiteLayout>
       <section className="border-b bg-background py-16 lg:py-24">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
-          <div className="order-1">
+<div className="mx-auto grid max-w-6xl items-start gap-12 px-4 lg:grid-cols-2">
+            <div className="order-1">
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary">
               Iniciativa Uergs • Apoio CAPES
             </span>

@@ -110,17 +110,16 @@ const paramN = search["n"] as number;
           <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">ODS Adjacentes Brasileiros</span>
           <span className="h-px flex-1 bg-border" />
         </div>
-        <div className="mt-6 flex flex-wrap justify-center gap-4">
-          {ODS_EXTRA.map((o) => (
+        <div className="mt-6 grid grid-cols-3 gap-3 lg:mx-auto lg:max-w-[52%]">
+                    {ODS_EXTRA.map((o) => (
             <button
               key={o.n}
               onClick={() => handleClick(o)}
               title={`ODS ${o.n} — ${o.nome}`}
-              className="h-24 w-24 overflow-hidden rounded-xl shadow-md transition-transform hover:scale-105"
+              className="overflow-hidden rounded-xl shadow-md transition-transform hover:scale-105 hover:shadow-lg"
               style={sel?.n === o.n ? { outline: `4px solid ${o.cor}`, outlineOffset: "3px" } : {}}
             >
-              <img src={o.img} alt={`ODS ${o.n}`} loading="lazy"
-                className="h-full w-full object-contain p-1" style={{ background: o.cor }} />
+              <img src={o.img} alt={`ODS ${o.n}`} loading="lazy" className="h-full w-full object-cover" />
             </button>
           ))}
         </div>

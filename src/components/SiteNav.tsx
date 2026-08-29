@@ -21,8 +21,8 @@ export default function SiteNav() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <img src={LOGO_OBSERVA} alt="Observa 2030" className="h-11 w-11 object-contain" />
-          <span className="hidden text-sm font-bold leading-tight text-foreground sm:block">
-            Observa 2030
+          <span className="text-sm font-bold leading-tight text-foreground">
+                        Observa 2030
             <span className="block text-xs font-normal text-muted-foreground">Observatório Gaúcho da Agenda 2030</span>
           </span>
         </Link>

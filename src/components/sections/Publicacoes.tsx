@@ -7,6 +7,7 @@ const CATS = [
   { key: "artigo_livro_capitulo", label: "Artigos, Livros e Capítulos de Livro" },
   { key: "relatorio_tecnico", label: "Relatórios Técnicos" },
   { key: "texto_jornal_revista_site", label: "Textos em Jornais, Revistas e Sites" },
+  { key: "anais_evento", label: "Anais de Eventos" },
 ] as const;
 
 export default function Publicacoes() {
@@ -96,11 +97,11 @@ export default function Publicacoes() {
                 <div className="flex gap-5 p-6">
                   {/* Imagem vertical — à esquerda */}
                   {img && !isWide && (
-                    <div className="hidden shrink-0 sm:block">
+                    <div className="shrink-0">
                       <img
                         src={img}
                         alt={p.titulo ?? "Capa"}
-                        className="h-36 w-28 rounded-xl object-cover shadow-sm"
+                        className="h-28 w-20 rounded-xl object-cover shadow-sm sm:h-36 sm:w-28"
                       />
                     </div>
                   )}

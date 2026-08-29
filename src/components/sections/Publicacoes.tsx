@@ -107,7 +107,7 @@ export default function Publicacoes() {
                   )}
 
                   {/* Conteúdo */}
-                  <div className="flex flex-1 flex-col">
+                  <div className="flex flex-1 flex-col min-w-0">
                     <span className="inline-block w-fit rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
                       {CATS.find((c) => c.key === p.categoria)?.label}
                     </span>

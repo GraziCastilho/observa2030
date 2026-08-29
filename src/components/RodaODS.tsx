@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 const BASE =
   "https://nsmwgtepyzwokvsltkda.supabase.co/storage/v1/object/public/observa-imagens/ods";
 
@@ -327,6 +326,17 @@ export function PainelDetalhe({ ods, onClose }: { ods: Ods; onClose: () => void;
 export default function RodaODS({ compact = false }: { compact?: boolean }) {
   const [hoveredN, setHoveredN] = useState<number | null>(null);
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
+
+  // Limpa o tooltip ao voltar para a página (touch devices não disparam mouseLeave)
+  useEffect(() => {
+    const clear = () => { setHoveredN(null); setTooltipPos(null); };
+    document.addEventListener("visibilitychange", clear);
+    window.addEventListener("focus", clear);
+    return () => {
+      document.removeEventListener("visibilitychange", clear);
+      window.removeEventListener("focus", clear);
+    };
+  }, []);
   const handleClick = (n: number) => {
     window.location.href = `/ods?n=${n}`;
   };

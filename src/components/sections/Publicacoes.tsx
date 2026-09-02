@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ExternalLink, Search } from "lucide-react";
+import { ExternalLink, Search, Eye } from "lucide-react";
 import { supabase, supabaseReady, type Publicacao } from "@/lib/supabase";
 
 const CATS = [
@@ -12,6 +12,8 @@ const CATS = [
 
 export default function Publicacoes() {
   const [tab, setTab] = useState<string>(CATS[0].key);
+  // ADIÇÃO: mapa local de cliques por id para atualização otimista
+  const [cliquesLocais, setCliquesLocais] = useState<Record<string, number>>({});
 
   const { data = [], isLoading } = useQuery({
     queryKey: ["publicacoes"],
@@ -24,6 +26,12 @@ export default function Publicacoes() {
   });
 
   const items = data.filter((p) => p.categoria === tab);
+
+  // ADIÇÃO: registra clique no Supabase e atualiza contador local
+  const registrarClique = async (id: string) => {
+    setCliquesLocais((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+    await supabase.rpc("incrementar_clique_publicacao", { pub_id: id });
+  };
 
   return (
     <section id="publicacoes" className="scroll-mt-24 bg-muted/50 py-20">
@@ -82,6 +90,8 @@ export default function Publicacoes() {
           {items.map((p) => {
             const img = (p as any).imagem_url as string | null;
             const isWide = img?.includes("capa.png");
+            // ADIÇÃO: total de cliques = banco + incrementos locais desta sessão
+            const totalCliques = ((p as any).cliques ?? 0) + (cliquesLocais[p.id] ?? 0);
 
             return (
               <article key={p.id} className="rounded-2xl border bg-card shadow-sm overflow-hidden">
@@ -112,15 +122,26 @@ export default function Publicacoes() {
                       {CATS.find((c) => c.key === p.categoria)?.label}
                     </span>
                     <p className="mt-3 leading-relaxed text-foreground">{p.referencia}</p>
-                    {(p.doi || p.url) && (
-              <a href={p.doi || p.url || "#"}                        
-              target="_blank"
-                        rel="noreferrer"
-                        className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-                      >
-                        {p.doi ? "Acessar artigo" : "Acessar"} <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    )}
+
+                    {/* ADIÇÃO: rodapé com botão Acessar + contador */}
+                    <div className="mt-4 flex items-center gap-4">
+                      {(p.doi || p.url) && (
+                        <a
+                          href={p.doi || p.url || "#"}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => registrarClique(p.id)}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                        >
+                          {p.doi ? "Acessar artigo" : "Acessar"} <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                      {/* ADIÇÃO: contador de cliques */}
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Eye className="h-3.5 w-3.5" />
+                        {totalCliques} {totalCliques === 1 ? "acesso" : "acessos"}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </article>

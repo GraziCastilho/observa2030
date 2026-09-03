@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink, Search, Eye } from "lucide-react";
 import { supabase, supabaseReady, type Publicacao } from "@/lib/supabase";
 
@@ -12,7 +12,7 @@ const CATS = [
 
 export default function Publicacoes() {
   const [tab, setTab] = useState<string>(CATS[0].key);
-  const [cliquesLocais, setCliquesLocais] = useState<Record<string, number>>({});
+  const queryClient = useQueryClient();
 
   const { data = [], isLoading } = useQuery({
     queryKey: ["publicacoes"],
@@ -29,10 +29,9 @@ export default function Publicacoes() {
 
   const items = data.filter((p) => p.categoria === tab);
 
-  // clique sempre conta e salva no banco — abre em nova aba então sem risco de duplo registro
   const registrarClique = async (id: string) => {
-    setCliquesLocais((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
     await supabase.rpc("incrementar_clique_publicacao", { pub_id: id });
+    queryClient.invalidateQueries({ queryKey: ["publicacoes"] });
   };
 
   return (
@@ -92,7 +91,7 @@ export default function Publicacoes() {
           {items.map((p) => {
             const img = (p as any).imagem_url as string | null;
             const isWide = img?.includes("capa.png");
-            const totalCliques = ((p as any).cliques ?? 0) + (cliquesLocais[p.id] ?? 0);
+            const totalCliques = (p as any).cliques ?? 0;
 
             return (
               <article key={p.id} className="rounded-2xl border bg-card shadow-sm overflow-hidden">

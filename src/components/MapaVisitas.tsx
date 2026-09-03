@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartTooltip, ResponsiveContainer, Cell } from "recharts";
 import { supabase } from "@/lib/supabase";
 
 type Visita = {
@@ -71,6 +70,12 @@ export default function MapaVisitas() {
     };
   }, []);
 
+  const cores = [
+    "bg-blue-500", "bg-blue-400", "bg-sky-400",
+    "bg-indigo-400", "bg-violet-400", "bg-purple-400",
+    "bg-fuchsia-400", "bg-pink-400", "bg-rose-400", "bg-red-400",
+  ];
+
   return (
     <section className="bg-muted/50 py-20">
       <div className="mx-auto max-w-6xl px-4">
@@ -80,6 +85,7 @@ export default function MapaVisitas() {
         <p className="mx-auto mt-3 max-w-xl text-center text-muted-foreground">
           Visitantes de todo o Brasil e do mundo acompanham o Observatório.
         </p>
+
         <div className="mx-auto mt-8 flex w-fit items-center gap-3 rounded-2xl border bg-card px-8 py-4 shadow-sm">
           <span className="text-4xl font-extrabold text-primary">
             {total.toLocaleString("pt-BR")}
@@ -90,7 +96,11 @@ export default function MapaVisitas() {
             registrados
           </span>
         </div>
-        <div className="mt-8 overflow-hidden rounded-2xl border bg-card shadow-sm" style={{ height: "420px" }}>
+
+        <div
+          className="mt-8 overflow-hidden rounded-2xl border bg-card shadow-sm"
+          style={{ height: "420px" }}
+        >
           <MapContainer
             center={[0, 0]}
             zoom={2}
@@ -122,42 +132,46 @@ export default function MapaVisitas() {
             ))}
           </MapContainer>
         </div>
+
         <p className="mt-3 text-center text-xs text-muted-foreground">
           Cada ponto representa um acesso registrado. Atualizado em tempo real.
         </p>
 
-        {/* GRÁFICO — adicionado abaixo do mapa */}
         {resumo.length > 0 && (
           <div className="mt-8 rounded-2xl border bg-card p-6 shadow-sm">
-            <h3 className="mb-4 text-lg font-semibold text-foreground">
+            <h3 className="mb-1 text-lg font-semibold text-foreground">
               Top origens de acesso
             </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart
-                data={resumo}
-                layout="vertical"
-                margin={{ top: 0, right: 24, left: 8, bottom: 0 }}
-              >
-                <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12 }} />
-                <YAxis
-                  type="category"
-                  dataKey="nome"
-                  width={200}
-                  tick={{ fontSize: 12 }}
-                />
-                <RechartTooltip
-                  formatter={(value: number) => [`${value} acessos`, "Total"]}
-                />
-                <Bar dataKey="total" radius={[0, 4, 4, 0]}>
-                  {resumo.map((_, i) => (
-                    <Cell
-                      key={i}
-                      fill={`hsl(${210 + i * 8}, 80%, ${60 - i * 2}%)`}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <p className="mb-5 text-xs text-muted-foreground">
+              Cidades e países com mais visitas registradas
+            </p>
+            <div className="space-y-3">
+              {resumo.map((r, i) => {
+                const max = resumo[0]?.total ?? 1;
+                const pct = Math.round((r.total / max) * 100);
+                return (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="w-5 shrink-0 text-right text-xs font-bold text-muted-foreground">
+                      {i + 1}
+                    </span>
+                    <div className="flex flex-1 flex-col gap-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-foreground">{r.nome}</span>
+                        <span className="text-xs font-semibold text-muted-foreground">
+                          {r.total} {r.total === 1 ? "acesso" : "acessos"}
+                        </span>
+                      </div>
+                      <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                        <div
+                          className={`h-2 rounded-full transition-all duration-500 ${cores[i] ?? "bg-blue-300"}`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 

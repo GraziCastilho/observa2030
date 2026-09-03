@@ -18,7 +18,10 @@ export default function Publicacoes() {
     queryKey: ["publicacoes"],
     enabled: supabaseReady,
     queryFn: async () => {
-      const { data, error } = await supabase.from("publicacoes").select("*").order("ordem", { ascending: true });
+      const { data, error } = await supabase
+        .from("publicacoes")
+        .select("*")
+        .order("ordem", { ascending: true });
       if (error) throw error;
       return (data ?? []) as Publicacao[];
     },
@@ -26,13 +29,11 @@ export default function Publicacoes() {
 
   const items = data.filter((p) => p.categoria === tab);
 
-const registrarClique = async (id: string) => {
-  const key = `pub_clique_${id}`;
-  if (sessionStorage.getItem(key)) return; // já contabilizado nesta sessão
-  sessionStorage.setItem(key, "1");
-  setCliquesLocais((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
-  await supabase.rpc("incrementar_clique_publicacao", { pub_id: id });
-};
+  // clique sempre conta e salva no banco — abre em nova aba então sem risco de duplo registro
+  const registrarClique = async (id: string) => {
+    setCliquesLocais((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+    await supabase.rpc("incrementar_clique_publicacao", { pub_id: id });
+  };
 
   return (
     <section id="publicacoes" className="scroll-mt-24 bg-muted/50 py-20">

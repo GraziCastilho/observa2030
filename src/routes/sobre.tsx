@@ -94,27 +94,7 @@ function SobrePage() {
             </p>
           </div>
         </section>
-        {/* Seção Objetivos */}
-        <section className="mt-16">
-          <h2 className="text-2xl font-bold text-foreground">Nossos Objetivos</h2>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {OBJETIVOS.map((o) => (
-              <article key={o.titulo} className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm">
-                <div className="flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full" style={{ background: `${o.cor}18` }}>
-                    <o.icon className="h-6 w-6" style={{ color: o.cor }} />
-                  </span>
-                  <div>
-                    <h3 className="font-bold leading-tight" style={{ color: o.cor }}>{o.titulo}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{o.desc}</p>
-                  </div>
-                </div>
-                <span className="absolute bottom-0 right-0 h-8 w-8"
-                  style={{ background: o.cor, clipPath: "polygon(100% 0, 100% 100%, 0 100%)", opacity: 0.85 }} />
-              </article>
-            ))}
-          </div>
-        </section>
+
         {/* Seção B */}
         <section className="mt-16">
           <h2 className="text-2xl font-bold text-foreground">O Projeto Observa 2030</h2>
@@ -164,6 +144,29 @@ function SobrePage() {
             </article>
           </div>
         </section>
+
+                {/* Seção Objetivos */}
+        <section className="mt-16">
+          <h2 className="text-2xl font-bold text-foreground">Nossos Objetivos</h2>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {OBJETIVOS.map((o) => (
+              <article key={o.titulo} className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full" style={{ background: `${o.cor}18` }}>
+                    <o.icon className="h-6 w-6" style={{ color: o.cor }} />
+                  </span>
+                  <div>
+                    <h3 className="font-bold leading-tight" style={{ color: o.cor }}>{o.titulo}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{o.desc}</p>
+                  </div>
+                </div>
+                <span className="absolute bottom-0 right-0 h-8 w-8"
+                  style={{ background: o.cor, clipPath: "polygon(100% 0, 100% 100%, 0 100%)", opacity: 0.85 }} />
+              </article>
+            ))}
+          </div>
+        </section>
+        
         {/* Seção D */}
         <section className="mt-16 grid items-center gap-8 rounded-2xl border bg-card p-8 shadow-sm md:grid-cols-[260px_1fr]">
           <img src={LOGO_OBSERVA} alt="Logo do Projeto Observa 2030" loading="lazy"

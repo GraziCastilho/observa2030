@@ -38,6 +38,8 @@ export type Publicacao = {
   doi: string | null;
   url: string | null;
   ordem: number | null;
+  cliques: number | null; // ← adiciona essa linha
+
 };
 
 export type Evento = {

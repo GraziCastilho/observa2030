@@ -13,6 +13,21 @@ type Visita = {
 
 type Resumo = { nome: string; total: number };
 
+const isDatacenter = (v: Visita) => {
+  const cidade = v.cidade?.toLowerCase() ?? "";
+  const estado = v.estado?.toLowerCase() ?? "";
+  const pais = v.pais?.toLowerCase() ?? "";
+  return (
+    (cidade === "san francisco" && pais === "united states") ||
+    (cidade === "ashburn" && pais === "united states") ||
+    (cidade === "singapore" && pais === "singapore") ||
+    (cidade === "amsterdam" && pais === "netherlands") ||
+    (cidade === "frankfurt" && pais === "germany") ||
+    estado === "virginia" ||
+    pais === ""
+  );
+};
+
 export default function MapaVisitas() {
   const [visitas, setVisitas] = useState<Visita[]>([]);
   const [total, setTotal] = useState(0);
@@ -34,15 +49,16 @@ export default function MapaVisitas() {
 
   useEffect(() => {
     const carregar = async () => {
-      const { data, count } = await supabase
+      const { data } = await supabase
         .from("visitas")
-        .select("lat, lng, cidade, estado, pais", { count: "exact" })
+        .select("lat, lng, cidade, estado, pais")
         .not("lat", "is", null);
       if (data) {
-        setVisitas(data as Visita[]);
-        setResumo(agrupar(data as Visita[]));
+        const filtradas = (data as Visita[]).filter((v) => !isDatacenter(v));
+        setVisitas(filtradas);
+        setResumo(agrupar(filtradas));
+        setTotal(filtradas.length);
       }
-      if (count) setTotal(count);
     };
     carregar();
 
@@ -53,14 +69,14 @@ export default function MapaVisitas() {
         { event: "INSERT", schema: "public", table: "visitas" },
         (payload) => {
           const v = payload.new as Visita;
-          if (v.lat) {
+          if (v.lat && !isDatacenter(v)) {
             setVisitas((prev) => {
               const nova = [...prev, v];
               setResumo(agrupar(nova));
               return nova;
             });
+            setTotal((prev) => prev + 1);
           }
-          setTotal((prev) => prev + 1);
         }
       )
       .subscribe();

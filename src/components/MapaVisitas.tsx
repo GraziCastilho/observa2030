@@ -19,10 +19,13 @@ const isDatacenter = (v: Visita) => {
   const pais = v.pais?.toLowerCase() ?? "";
   return (
     (cidade === "san francisco" && pais === "united states") ||
+    (cidade === "santa clara" && pais === "united states") ||
     (cidade === "ashburn" && pais === "united states") ||
     (cidade === "singapore" && pais === "singapore") ||
     (cidade === "amsterdam" && pais === "netherlands") ||
     (cidade === "frankfurt" && pais === "germany") ||
+    (cidade === "paris" && pais === "frança") ||
+    (cidade === "varsóvia" && pais === "polónia") ||
     estado === "virginia" ||
     pais === ""
   );

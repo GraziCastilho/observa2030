@@ -10,17 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DissertacoesRouteImport } from './routes/dissertacoes'
 import { Route as EquipeRouteImport } from './routes/equipe'
 import { Route as OdsRouteImport } from './routes/ods'
 import { Route as ParceriasRouteImport } from './routes/parcerias'
 import { Route as PublicacoesRouteImport } from './routes/publicacoes'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as DissertacoesProgramaRouteImport } from './routes/dissertacoes.$programa'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DissertacoesRoute = DissertacoesRouteImport.update({
+  id: '/dissertacoes',
+  path: '/dissertacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipeRoute = EquipeRouteImport.update({
@@ -48,6 +55,11 @@ const SobreRoute = SobreRouteImport.update({
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DissertacoesProgramaRoute = DissertacoesProgramaRouteImport.update({
+  id: '/$programa',
+  path: '/$programa',
+  getParentRoute: () => DissertacoesRoute,
+} as any)
 const EventosIndexRoute = EventosIndexRouteImport.update({
   id: '/eventos/',
   path: '/eventos/',
@@ -61,32 +73,38 @@ const EventosSlugRoute = EventosSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dissertacoes': typeof DissertacoesRouteWithChildren
   '/equipe': typeof EquipeRoute
   '/ods': typeof OdsRoute
   '/parcerias': typeof ParceriasRoute
   '/publicacoes': typeof PublicacoesRoute
   '/sobre': typeof SobreRoute
+  '/dissertacoes/$programa': typeof DissertacoesProgramaRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/eventos/': typeof EventosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dissertacoes': typeof DissertacoesRouteWithChildren
   '/equipe': typeof EquipeRoute
   '/ods': typeof OdsRoute
   '/parcerias': typeof ParceriasRoute
   '/publicacoes': typeof PublicacoesRoute
   '/sobre': typeof SobreRoute
+  '/dissertacoes/$programa': typeof DissertacoesProgramaRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/eventos': typeof EventosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dissertacoes': typeof DissertacoesRouteWithChildren
   '/equipe': typeof EquipeRoute
   '/ods': typeof OdsRoute
   '/parcerias': typeof ParceriasRoute
   '/publicacoes': typeof PublicacoesRoute
   '/sobre': typeof SobreRoute
+  '/dissertacoes/$programa': typeof DissertacoesProgramaRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/eventos/': typeof EventosIndexRoute
 }
@@ -94,37 +112,44 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dissertacoes'
     | '/equipe'
     | '/ods'
     | '/parcerias'
     | '/publicacoes'
     | '/sobre'
+    | '/dissertacoes/$programa'
     | '/eventos/$slug'
     | '/eventos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dissertacoes'
     | '/equipe'
     | '/ods'
     | '/parcerias'
     | '/publicacoes'
     | '/sobre'
+    | '/dissertacoes/$programa'
     | '/eventos/$slug'
     | '/eventos'
   id:
     | '__root__'
     | '/'
+    | '/dissertacoes'
     | '/equipe'
     | '/ods'
     | '/parcerias'
     | '/publicacoes'
     | '/sobre'
+    | '/dissertacoes/$programa'
     | '/eventos/$slug'
     | '/eventos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DissertacoesRoute: typeof DissertacoesRouteWithChildren
   EquipeRoute: typeof EquipeRoute
   OdsRoute: typeof OdsRoute
   ParceriasRoute: typeof ParceriasRoute
@@ -141,6 +166,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dissertacoes': {
+      id: '/dissertacoes'
+      path: '/dissertacoes'
+      fullPath: '/dissertacoes'
+      preLoaderRoute: typeof DissertacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipe': {
@@ -178,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dissertacoes/$programa': {
+      id: '/dissertacoes/$programa'
+      path: '/$programa'
+      fullPath: '/dissertacoes/$programa'
+      preLoaderRoute: typeof DissertacoesProgramaRouteImport
+      parentRoute: typeof DissertacoesRoute
+    }
     '/eventos/': {
       id: '/eventos/'
       path: '/eventos'
@@ -195,8 +234,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DissertacoesRouteChildren {
+  DissertacoesProgramaRoute: typeof DissertacoesProgramaRoute
+}
+
+const DissertacoesRouteChildren: DissertacoesRouteChildren = {
+  DissertacoesProgramaRoute: DissertacoesProgramaRoute,
+}
+
+const DissertacoesRouteWithChildren = DissertacoesRoute._addFileChildren(
+  DissertacoesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DissertacoesRoute: DissertacoesRouteWithChildren,
   EquipeRoute: EquipeRoute,
   OdsRoute: OdsRoute,
   ParceriasRoute: ParceriasRoute,

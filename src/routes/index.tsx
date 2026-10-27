@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import RodaODS from "@/components/RodaODS";
 import SiteLayout from "@/components/SiteLayout";
-import MapaVisitas from "@/components/MapaVisitas";
-
+import MapaVisitasClient from "@/components/MapaVisitasClient";
 
 const TITLE = "Observa 2030";
 const DESC = "Observatório da Uergs que mapeia e dá visibilidade aos produtos técnicos e tecnológicos alinhados aos ODS e à Agenda 2030 no Rio Grande do Sul.";
@@ -142,7 +141,7 @@ function Index() {
           </div>
         </div>
       </section>
-      <MapaVisitas />
+      <MapaVisitasClient />
     </SiteLayout>
   );
 }

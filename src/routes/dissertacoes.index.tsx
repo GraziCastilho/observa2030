@@ -15,7 +15,7 @@ const TITLE = "Dissertações da Uergs — Panorama Geral | Observa 2030";
 const DESC =
   "Panorama da aderência das dissertações dos cinco Programas de Pós-Graduação da Uergs aos Objetivos de Desenvolvimento Sustentável (ODS).";
 
-export const Route = createFileRoute("/dissertacoes")({
+export const Route = createFileRoute("/dissertacoes/")({
   head: () => ({
     meta: [
       { title: TITLE },

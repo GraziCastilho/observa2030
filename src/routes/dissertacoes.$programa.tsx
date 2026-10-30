@@ -56,33 +56,30 @@ function ProgramaPage() {
   const [odsFiltro, setOdsFiltro] = useState<number | null>(null);
 
   const { data = [], isLoading } = useQuery({
-    queryKey: ["dissertacoes", info?.sigla],
+    queryKey: ["dissertacoes", info?.dbPrograma],
     enabled: supabaseReady && !!info,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("dissertacoes")
         .select("*")
-        .eq("programa", info!.sigla)
+        .eq("programa", info!.dbPrograma)
         .order("ordem", { ascending: true });
       if (error) throw error;
       return (data ?? []) as Dissertacao[];
     },
   });
 
-  // Pré-processa badges por dissertação
   const comBadges = useMemo(
     () => data.map((d) => ({ ...d, badges: parseBadges(d.validacao_manual) })),
     [data]
   );
 
-  // ODS presentes no programa (para os chips de filtro)
   const odsDisponiveis = useMemo(() => {
     const s = new Set<number>();
     comBadges.forEach((d) => d.badges.forEach((b) => s.add(b.n)));
     return [...s].sort((a, b) => a - b);
   }, [comBadges]);
 
-  // Aplica busca + filtro
   const lista = useMemo(() => {
     const q = semAcento(busca.trim());
     return comBadges.filter((d) => {
@@ -115,25 +112,60 @@ function ProgramaPage() {
           <ArrowLeft className="h-4 w-4" /> Panorama Geral
         </Link>
 
-        {/* Cabeçalho do programa */}
-        <div className="mt-4 rounded-2xl border bg-card p-7 shadow-sm" style={{ borderTopWidth: 5, borderTopColor: info.cor }}>
-          <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: info.cor }}>{info.sigla}</h1>
-            <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: `${info.cor}1a`, color: info.cor }}>
-              {info.total} dissertações
-            </span>
-          </div>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Dissertações do Programa de Pós-Graduação e sua aderência aos Objetivos de Desenvolvimento Sustentável.
-          </p>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            <Bar label="Aderência direta" value={info.diretasPct} n={info.diretasN} cor={info.cor} />
-            <Bar label="Aderência indireta" value={info.indiretasPct} n={info.indiretasN} cor={info.cor} />
+        {/* Cabeçalho do programa — logo em cima, sigla, nome completo embaixo */}
+        <div className="mt-4 overflow-hidden rounded-2xl border bg-card shadow-sm" style={{ borderTopWidth: 5, borderTopColor: info.cor }}>
+          <div className="px-6 py-8 sm:px-10 sm:py-10">
+            {/* Logo (topo, centralizada) */}
+            <div className="mx-auto flex h-28 w-full max-w-[320px] items-center justify-center rounded-xl bg-white p-4 sm:h-32">
+              <img
+                src={info.logo}
+                alt={`Logo ${info.sigla}`}
+                loading="lazy"
+                className="max-h-full w-auto max-w-full object-contain"
+                onError={(e) => { (e.currentTarget.style.display = "none"); }}
+              />
+            </div>
+
+            {/* Sigla */}
+            <h1 className="mt-6 text-center text-4xl font-extrabold tracking-tight sm:text-5xl" style={{ color: info.cor }}>
+              {info.sigla}
+            </h1>
+
+            {/* Nome completo do programa */}
+            <p className="mx-auto mt-3 max-w-3xl text-center text-base font-semibold leading-snug text-foreground sm:text-lg">
+              {info.nomeCompleto} ({info.sigla})
+            </p>
+
+            {/* Tipo + página oficial */}
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
+              <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: `${info.cor}1a`, color: info.cor }}>
+                {info.tipo}
+              </span>
+              <span className="rounded-full border px-3 py-1 text-xs font-semibold text-muted-foreground">
+                {info.total} dissertações
+              </span>
+              <a href={info.paginaOficial} target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold hover:underline"
+                style={{ color: info.cor, borderColor: `${info.cor}66` }}>
+                Página oficial do programa <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </div>
+
+            {/* Textos de apresentação (documento base) */}
+            <div className="mx-auto mt-7 max-w-3xl space-y-4 border-t pt-7">
+              {info.descricao.map((par, i) => (
+                <p key={i} className="leading-relaxed text-muted-foreground">{par}</p>
+              ))}
+            </div>
           </div>
         </div>
 
+        {/* Intro da lista (texto do documento) */}
+        <h2 className="mt-10 text-xl font-bold text-foreground">Dissertações do programa</h2>
+        <p className="mt-2 max-w-3xl leading-relaxed text-muted-foreground">{info.introLista}</p>
+
         {/* Busca + filtro por ODS */}
-        <div className="mt-8 rounded-2xl border bg-card p-4 shadow-sm">
+        <div className="mt-6 rounded-2xl border bg-card p-4 shadow-sm">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -167,7 +199,6 @@ function ProgramaPage() {
           )}
         </div>
 
-        {/* Resultado */}
         <p className="mt-5 text-sm text-muted-foreground">
           {isLoading ? "Carregando dissertações…" : `${lista.length} ${lista.length === 1 ? "dissertação" : "dissertações"}`}
           {!isLoading && (odsFiltro != null || busca) ? " encontradas" : ""}
@@ -187,27 +218,12 @@ function ProgramaPage() {
         </div>
 
         <p className="mt-10 text-xs leading-relaxed text-muted-foreground">
-          Classificação por validação qualitativa manual, no nível das metas dos ODS. Uma mesma dissertação pode
-          apresentar aderência direta e indireta a diferentes objetivos. Repositório Institucional da Uergs.
+          Dissertações organizadas por ano de defesa. Classificação por validação qualitativa manual, no nível das
+          metas dos ODS — uma mesma dissertação pode apresentar aderência direta e indireta a diferentes objetivos.
+          Acesso ao texto integral pelo Repositório Institucional da Uergs, quando disponível.
         </p>
       </div>
     </SiteLayout>
-  );
-}
-
-function Bar({ label, value, n, cor }: { label: string; value: number; n: number; cor: string }) {
-  return (
-    <div>
-      <div className="flex items-center justify-between text-xs">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-semibold text-foreground">
-          {(value * 100).toLocaleString("pt-BR", { maximumFractionDigits: 1 })}% · {n}
-        </span>
-      </div>
-      <span className="mt-1 block h-2 overflow-hidden rounded-full bg-muted">
-        <span className="block h-full rounded-full" style={{ width: `${value * 100}%`, background: cor }} />
-      </span>
-    </div>
   );
 }
 

@@ -8,6 +8,7 @@ const CATS = [
   { key: "relatorio_tecnico", label: "Relatórios Técnicos" },
   { key: "texto_jornal_revista_site", label: "Textos em Jornais, Revistas e Sites" },
   { key: "anais_evento", label: "Anais de Eventos" },
+  { key: "guia_informativo", label: "Guia Informativo" },
 ] as const;
 
 export default function Publicacoes() {

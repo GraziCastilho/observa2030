@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EquipeRouteImport } from './routes/equipe'
 import { Route as OdsRouteImport } from './routes/ods'
 import { Route as ParceriasRouteImport } from './routes/parcerias'
+import { Route as PublicacoesRouteImport } from './routes/publicacoes'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as DissertacoesIndexRouteImport } from './routes/dissertacoes.index'
 import { Route as DissertacoesProgramaRouteImport } from './routes/dissertacoes.$programa'
@@ -37,6 +38,11 @@ const OdsRoute = OdsRouteImport.update({
 const ParceriasRoute = ParceriasRouteImport.update({
   id: '/parcerias',
   path: '/parcerias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicacoesRoute = PublicacoesRouteImport.update({
+  id: '/publicacoes',
+  path: '/publicacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SobreRoute = SobreRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/equipe': typeof EquipeRoute
   '/ods': typeof OdsRoute
   '/parcerias': typeof ParceriasRoute
+  '/publicacoes': typeof PublicacoesRoute
   '/sobre': typeof SobreRoute
   '/dissertacoes/$programa': typeof DissertacoesProgramaRoute
   '/eventos/$slug': typeof EventosSlugRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/equipe': typeof EquipeRoute
   '/ods': typeof OdsRoute
   '/parcerias': typeof ParceriasRoute
+  '/publicacoes': typeof PublicacoesRoute
   '/sobre': typeof SobreRoute
   '/dissertacoes/$programa': typeof DissertacoesProgramaRoute
   '/eventos/$slug': typeof EventosSlugRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/equipe': typeof EquipeRoute
   '/ods': typeof OdsRoute
   '/parcerias': typeof ParceriasRoute
+  '/publicacoes': typeof PublicacoesRoute
   '/sobre': typeof SobreRoute
   '/dissertacoes/$programa': typeof DissertacoesProgramaRoute
   '/eventos/$slug': typeof EventosSlugRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/equipe'
     | '/ods'
     | '/parcerias'
+    | '/publicacoes'
     | '/sobre'
     | '/dissertacoes/$programa'
     | '/eventos/$slug'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/equipe'
     | '/ods'
     | '/parcerias'
+    | '/publicacoes'
     | '/sobre'
     | '/dissertacoes/$programa'
     | '/eventos/$slug'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/equipe'
     | '/ods'
     | '/parcerias'
+    | '/publicacoes'
     | '/sobre'
     | '/dissertacoes/$programa'
     | '/eventos/$slug'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   EquipeRoute: typeof EquipeRoute
   OdsRoute: typeof OdsRoute
   ParceriasRoute: typeof ParceriasRoute
+  PublicacoesRoute: typeof PublicacoesRoute
   SobreRoute: typeof SobreRoute
   DissertacoesProgramaRoute: typeof DissertacoesProgramaRoute
   EventosSlugRoute: typeof EventosSlugRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/parcerias'
       fullPath: '/parcerias'
       preLoaderRoute: typeof ParceriasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publicacoes': {
+      id: '/publicacoes'
+      path: '/publicacoes'
+      fullPath: '/publicacoes'
+      preLoaderRoute: typeof PublicacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sobre': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   EquipeRoute: EquipeRoute,
   OdsRoute: OdsRoute,
   ParceriasRoute: ParceriasRoute,
+  PublicacoesRoute: PublicacoesRoute,
   SobreRoute: SobreRoute,
   DissertacoesProgramaRoute: DissertacoesProgramaRoute,
   EventosSlugRoute: EventosSlugRoute,

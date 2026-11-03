@@ -116,8 +116,8 @@ function ProgramaPage() {
         <div className="mt-4 overflow-hidden rounded-2xl border bg-card shadow-sm" style={{ borderTopWidth: 5, borderTopColor: info.cor }}>
           <div className="px-6 py-8 sm:px-10 sm:py-10">
             {/* Logo (topo, centralizada) */}
-            <div className="mx-auto flex h-28 w-full max-w-[320px] items-center justify-center rounded-xl bg-white p-4 sm:h-32">
-              <img
+              <div className="mx-auto flex h-56 w-full max-w-[500px] items-center justify-center rounded-xl bg-white p-2 sm:h-72">
+                <img
                 src={info.logo}
                 alt={`Logo ${info.sigla}`}
                 loading="lazy"

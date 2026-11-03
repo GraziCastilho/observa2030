@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookMarked, Target, Layers } from "lucide-react";
+import { ArrowRight, BookMarked, Target, Layers, Users, Globe2, TrendingUp, Scale, Handshake } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import SiteLayout from "@/components/SiteLayout";
 import { ODS_17 } from "@/components/RodaODS";
 import PanoramaChart, { type Serie, type Grupo } from "@/components/PanoramaChart";
@@ -53,6 +54,15 @@ const odsNome = (n: number) => ODS_17.find((o) => o.n === n)?.nome ?? `ODS ${n}`
 const C_DIRETA = "#19486A";
 const C_INDIRETA = "#FD6925";
 const C_GERAL = "#4C9F38";
+
+// Ícone representativo de cada um dos 5 Ps da Sustentabilidade
+const PS_ICON: Record<string, LucideIcon> = {
+  Pessoas: Users,
+  Planeta: Globe2,
+  Prosperidade: TrendingUp,
+  Paz: Scale,
+  Parcerias: Handshake,
+};
 
 const TICKS_100 = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
 const TICKS_60 = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6];
@@ -147,11 +157,14 @@ function PanoramaPage() {
 
         {/* ═══════════ 1. DISTRIBUIÇÃO POR PROGRAMA ═══════════ */}
         <SecTitle>Distribuição das dissertações por Programa de Pós-Graduação</SecTitle>
-        <P>
+
+        {/* Bloco de largura reduzida: texto justificado, alinhado à tabela */}
+        <div className="mt-4 max-w-4xl">
+        <p className="text-justify leading-relaxed text-muted-foreground">
           A tabela a seguir apresenta a distribuição das dissertações analisadas entre os cinco Programas de
           Pós-Graduação da Uergs, destacando a quantidade e o percentual de trabalhos com relações diretas e indiretas
           aos Objetivos de Desenvolvimento Sustentável (ODS), conforme a validação qualitativa manual.
-        </P>
+        </p>
 
         {/* Tabela 01 — Panorama por programa */}
         <Quadro
@@ -196,12 +209,14 @@ function PanoramaPage() {
           </p>
         </Quadro>
 
-        <P>
+        <p className="mt-4 text-justify leading-relaxed text-muted-foreground">
           Das 254 dissertações analisadas, 237 (93,31%) apresentaram pelo menos uma relação direta com os ODS, enquanto
           140 (55,12%) demonstraram relações indiretas. O PPGED concentrou o maior número de dissertações (88), seguido
           pelo PPGAS (73). Os maiores percentuais de aderência direta foram observados no PPGED e no PPGSTEM (100% em
           ambos), evidenciando a ampla presença de temáticas relacionadas à Agenda 2030 na produção científica analisada.
-        </P>
+        </p>
+        </div>
+        {/* fim do bloco de largura reduzida */}
 
         {/* Gráfico 1 — Perfil dos PPGs */}
         <div className="mt-8">
@@ -415,16 +430,20 @@ function PanoramaPage() {
 
         {/* Cards 5 Ps institucionais */}
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {CINCO_PS.map((p) => (
-            <article key={p.nome} className="rounded-2xl border bg-card p-5 text-center shadow-sm">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full" style={{ background: `${p.cor}1a` }}>
-                <span className="text-lg font-extrabold" style={{ color: p.cor }}>{pct1(p.pct)}</span>
-              </div>
-              <p className="mt-3 font-bold text-foreground">{p.nome}</p>
-              <p className="text-xs text-muted-foreground">{p.n} dissertações</p>
-              <p className="mt-1 text-[11px] font-medium text-muted-foreground">{p.desc}</p>
-            </article>
-          ))}
+          {CINCO_PS.map((p) => {
+            const Icone = PS_ICON[p.nome] ?? Target;
+            return (
+              <article key={p.nome} className="rounded-2xl border bg-card p-5 text-center shadow-sm">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full" style={{ background: `${p.cor}1a` }}>
+                  <Icone className="h-7 w-7" style={{ color: p.cor }} aria-hidden />
+                </div>
+                <p className="mt-3 text-2xl font-extrabold" style={{ color: p.cor }}>{pct1(p.pct)}</p>
+                <p className="mt-0.5 font-bold text-foreground">{p.nome}</p>
+                <p className="text-xs text-muted-foreground">{p.n} dissertações</p>
+                <p className="mt-1 text-[11px] font-medium text-muted-foreground">{p.desc}</p>
+              </article>
+            );
+          })}
         </div>
 
         <P>
@@ -475,7 +494,7 @@ function PanoramaPage() {
 
         {/* Tabela 4A — diretas */}
         <TabelaConc
-          titulo="4A · Concordância das classificações diretas"
+          titulo="Concordância das classificações diretas"
           linhas={CONC_DIRETA}
           total={CONC_DIRETA_TOTAL}
         />
@@ -489,7 +508,7 @@ function PanoramaPage() {
 
         {/* Tabela 4B — indiretas */}
         <TabelaConc
-          titulo="4B · Concordância das classificações indiretas"
+          titulo="Concordância das classificações indiretas"
           linhas={CONC_INDIRETA}
           total={CONC_INDIRETA_TOTAL}
         />
@@ -502,7 +521,7 @@ function PanoramaPage() {
         </P>
 
         {/* Tabela 4C — geral */}
-        <Quadro titulo="4C · Concordância geral — três classes: ausente / direta / indireta">
+        <Quadro titulo="Concordância geral — três classes: ausente / direta / indireta">
           <table className="w-full min-w-[720px] border-collapse text-sm">
             <thead>
               <tr className="border-b bg-muted/40 text-xs font-bold uppercase tracking-wide text-muted-foreground">

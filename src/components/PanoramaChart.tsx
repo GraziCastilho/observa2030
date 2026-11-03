@@ -53,7 +53,7 @@ export default function PanoramaChart({
         {titulo}
       </figcaption>
 
-      <div className="overflow-x-auto pb-1">
+      <div className="overflow-x-auto pb-1 pt-7">
         <div style={{ minWidth: minWidth || undefined }}>
           {/* Área do gráfico: eixo Y + barras */}
           <div className="flex" style={{ height: altura }}>
@@ -91,6 +91,7 @@ export default function PanoramaChart({
                       const cor = grupo.cores?.[si] ?? serie.cor;
                       const ativo = hover?.g === gi && hover?.s === si;
                       const h = Math.max(0, Math.min(v / yMax, 1)) * 100;
+                      const alto = h > 82; // barra alta: rótulo/tooltip vão para DENTRO da barra, evitando corte no topo
                       return (
                         <div
                           key={si}
@@ -111,22 +112,33 @@ export default function PanoramaChart({
                           >
                             {/* Tooltip */}
                             {ativo && (
-                              <div className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded-lg bg-foreground px-2.5 py-1.5 text-center text-[11px] font-semibold text-background shadow-lg">
+                              <div
+                                className={`pointer-events-none absolute left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-lg bg-foreground px-2.5 py-1.5 text-center text-[11px] font-semibold text-background shadow-lg ${
+                                  alto ? "top-1" : "bottom-full mb-1.5"
+                                }`}
+                              >
                                 <span className="block opacity-80">
                                   {grupo.label}
                                   {series.length > 1 ? ` · ${serie.label}` : ""}
                                 </span>
                                 <span className="block text-sm">{fmtPct(v, casasDecimais)}</span>
-                                <span className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-foreground" />
+                                {!alto && (
+                                  <span className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-foreground" />
+                                )}
                               </div>
                             )}
 
                             {/* Rótulo fixo (poucas barras) */}
-                            {mostrarRotulos && v > 0 && !ativo && (
-                              <span className="pointer-events-none absolute bottom-full left-1/2 mb-0.5 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold tabular-nums text-muted-foreground sm:text-[10px]">
-                                {fmtPct(v, v < 0.1 ? 1 : 0)}
-                              </span>
-                            )}
+                            {mostrarRotulos && v > 0 && !ativo &&
+                              (alto ? (
+                                <span className="pointer-events-none absolute left-1/2 top-1 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold tabular-nums text-white sm:text-[10px]">
+                                  {fmtPct(v, v < 0.1 ? 1 : 0)}
+                                </span>
+                              ) : (
+                                <span className="pointer-events-none absolute bottom-full left-1/2 mb-0.5 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold tabular-nums text-muted-foreground sm:text-[10px]">
+                                  {fmtPct(v, v < 0.1 ? 1 : 0)}
+                                </span>
+                              ))}
                           </div>
                         </div>
                       );

@@ -118,7 +118,7 @@ function PanoramaPage() {
         </h1>
 
         {/* Parágrafos de abertura (texto do documento) */}
-        <div className="mt-6 max-w-3xl space-y-4 leading-relaxed text-muted-foreground">
+        <div className="mt-6 space-y-4 text-[1.0625rem] leading-relaxed text-justify text-muted-foreground">
           <p>
             Com o objetivo de compreender as relações entre a produção científica dos Programas de Pós-Graduação da
             Uergs e os Objetivos de Desenvolvimento Sustentável (ODS), o Projeto Observa 2030 realizou um levantamento e
@@ -158,9 +158,9 @@ function PanoramaPage() {
         {/* ═══════════ 1. DISTRIBUIÇÃO POR PROGRAMA ═══════════ */}
         <SecTitle>Distribuição das dissertações por Programa de Pós-Graduação</SecTitle>
 
-        {/* Bloco de largura reduzida: texto justificado, alinhado à tabela */}
-        <div className="mt-4 max-w-4xl">
-        <p className="text-justify leading-relaxed text-muted-foreground">
+        {/* Tabela e textos na largura cheia da página (alinhados à borda de referência) */}
+        <div className="mt-4">
+        <p className="text-[1.0625rem] text-justify leading-relaxed text-muted-foreground">
           A tabela a seguir apresenta a distribuição das dissertações analisadas entre os cinco Programas de
           Pós-Graduação da Uergs, destacando a quantidade e o percentual de trabalhos com relações diretas e indiretas
           aos Objetivos de Desenvolvimento Sustentável (ODS), conforme a validação qualitativa manual.
@@ -209,7 +209,7 @@ function PanoramaPage() {
           </p>
         </Quadro>
 
-        <p className="mt-4 text-justify leading-relaxed text-muted-foreground">
+        <p className="mt-4 text-[1.0625rem] text-justify leading-relaxed text-muted-foreground">
           Das 254 dissertações analisadas, 237 (93,31%) apresentaram pelo menos uma relação direta com os ODS, enquanto
           140 (55,12%) demonstraram relações indiretas. O PPGED concentrou o maior número de dissertações (88), seguido
           pelo PPGAS (73). Os maiores percentuais de aderência direta foram observados no PPGED e no PPGSTEM (100% em
@@ -633,7 +633,7 @@ function SecTitle({ children }: { children: ReactNode }) {
   return <h2 className="mt-16 scroll-mt-20 text-2xl font-bold leading-snug text-foreground">{children}</h2>;
 }
 function P({ children }: { children: ReactNode }) {
-  return <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">{children}</p>;
+  return <p className="mt-4 text-[1.0625rem] leading-relaxed text-justify text-muted-foreground">{children}</p>;
 }
 
 function IndicadorCard({ cor, icon, valor, texto }: { cor: string; icon: ReactNode; valor: string; texto: ReactNode }) {
@@ -740,7 +740,7 @@ function StatConc({ titulo, sub, c }: { titulo: string; sub: string; c: { simple
 // Fórmula em forma de fração: rótulo = (numerador / denominador) × 100
 function Formula({ rotulo, num: numer, den, mult = "× 100", kappa = false }: { rotulo: string; num: string; den: string; mult?: string; kappa?: boolean }) {
   return (
-    <div className="my-4 flex flex-wrap items-center gap-3 rounded-xl border bg-muted/30 px-5 py-4 text-sm">
+    <div className="my-4 flex flex-wrap items-center justify-center gap-3 rounded-xl border bg-muted/30 px-5 py-4 text-sm">
       <span className="font-semibold text-foreground">{rotulo}</span>
       <span className="text-muted-foreground">=</span>
       <span className="inline-flex flex-col items-center text-center leading-tight text-foreground">
@@ -757,11 +757,11 @@ function Metodologia() {
   return (
     <section className="mt-16">
       <h2 className="scroll-mt-20 border-b pb-4 text-3xl font-bold tracking-tight text-foreground">Metodologia</h2>
-      <p className="mt-6 max-w-3xl font-semibold text-foreground">
+      <p className="mt-6 font-semibold text-foreground">
         Metodologia de análise da aderência das dissertações da Uergs aos ODS
       </p>
 
-      <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-muted-foreground">
+      <div className="mt-4 space-y-4 leading-relaxed text-justify text-muted-foreground">
         <p>
           Para o mapeamento da aderência das dissertações aos Objetivos de Desenvolvimento Sustentável (ODS), foi
           adotada uma abordagem metodológica quali-quantitativa, estruturada em duas etapas complementares: (i) análise
@@ -794,7 +794,7 @@ function Metodologia() {
           considerados os seguintes critérios:
         </p>
       </MetBody>
-      <div className="mt-4 max-w-md overflow-hidden rounded-xl border">
+      <div className="mt-4 overflow-hidden rounded-xl border">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-muted/50 text-xs font-bold uppercase tracking-wide text-muted-foreground">
@@ -1137,7 +1137,7 @@ function Metodologia() {
 
       {/* Referências */}
       <MetTitle>Referências</MetTitle>
-      <ul className="mt-4 max-w-3xl space-y-3 text-sm leading-relaxed text-muted-foreground">
+      <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
         <li>COHEN, J. A coefficient of agreement for nominal scales. <em>Educational and Psychological Measurement</em>, v. 20, n. 1, p. 37–46, 1960. DOI: <Ref href="https://doi.org/10.1177/001316446002000104" /></li>
         <li>FEINSTEIN, A. R.; CICCHETTI, D. V. High agreement but low kappa: I. The problems of two paradoxes. <em>Journal of Clinical Epidemiology</em>, v. 43, n. 6, p. 543–549, 1990. DOI: <Ref href="https://doi.org/10.1016/0895-4356(90)90158-L" /></li>
         <li>GOMES JUNIOR, J. C.; CORBARI, S. D.; KNIESS, C. T. et al. Proposed mapping and evaluation model of sustainable development goals in graduate programs in environmental sciences in Brazil. <em>International Journal of Sustainability in Higher Education</em>, v. 24, n. 7, p. 1452–1473, 2023. DOI: <Ref href="https://doi.org/10.1108/IJSHE-07-2022-0230" /></li>
@@ -1158,11 +1158,11 @@ function MetSub({ children }: { children: ReactNode }) {
   return <h4 className="mt-6 text-base font-semibold text-foreground">{children}</h4>;
 }
 function MetBody({ children }: { children: ReactNode }) {
-  return <div className="mt-3 max-w-3xl space-y-3 leading-relaxed text-muted-foreground">{children}</div>;
+  return <div className="mt-3 space-y-3 leading-relaxed text-justify text-muted-foreground">{children}</div>;
 }
 function MetList({ itens }: { itens: string[] }) {
   return (
-    <ul className="mt-3 max-w-3xl space-y-2">
+    <ul className="mt-3 space-y-2">
       {itens.map((t, i) => (
         <li key={i} className="flex gap-2.5 leading-relaxed text-muted-foreground">
           <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />

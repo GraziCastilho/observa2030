@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Search, ExternalLink, ChevronDown, ArrowLeft, Lock } from "lucide-react";
+import { Search, ExternalLink, ChevronDown, ArrowLeft, Lock, Info } from "lucide-react";
 import SiteLayout from "@/components/SiteLayout";
 import { supabase, supabaseReady } from "@/lib/supabase";
 import { ODS_17, ODS_EXTRA } from "@/components/RodaODS";
@@ -24,28 +24,40 @@ type Dissertacao = {
   ordem: number | null;
 };
 
-type Badge = { n: number; tipo: "Direta" | "Indireta" };
+type Badge = { n: number; meta: string; tipo: "Direta" | "Indireta" };
 
 const CORES: Record<number, string> = {};
-[...ODS_17, ...ODS_EXTRA].forEach((o) => (CORES[o.n] = o.cor));
+const NOMES: Record<number, string> = {};
+[...ODS_17, ...ODS_EXTRA].forEach((o) => {
+  CORES[o.n] = o.cor;
+  NOMES[o.n] = o.nome;
+});
 const corOds = (n: number) => CORES[n] ?? "#64748b";
+const nomeOds = (n: number) => NOMES[n] ?? "";
 
 const semAcento = (s: string) =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-// Extrai os ODS validados (nº + tipo) da coluna de validação manual
+// Extrai ODS + meta (ou diretriz) + tipo da coluna de validação manual.
+// Cada item vem como "ODS 4 – Meta 4.2 (Direta)" separado por ";".
+// Mantém a ordem do documento e todos os pares distintos (mesma ODS pode
+// aparecer com metas diferentes).
 function parseBadges(txt: string | null): Badge[] {
   if (!txt) return [];
-  const re = /ODS\s*(\d+)[^;]*?\((Direta|Indireta)\)/gi;
-  const map = new Map<number, "Direta" | "Indireta">();
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(txt))) {
+  const out: Badge[] = [];
+  const vistos = new Set<string>();
+  for (const trecho of txt.split(";")) {
+    const m = /ODS\s*(\d+)\s*[–—-]\s*(.+?)\s*\((Direta|Indireta)\)/i.exec(trecho);
+    if (!m) continue;
     const n = parseInt(m[1]!, 10);
-    const tipo = m[2]! as "Direta" | "Indireta";
-    // Direta tem prioridade se o mesmo ODS aparecer duas vezes
-    if (!map.has(n) || tipo === "Direta") map.set(n, tipo);
+    const meta = m[2]!.trim();
+    const tipo = m[3]! as "Direta" | "Indireta";
+    const chave = `${n}|${meta}|${tipo}`;
+    if (vistos.has(chave)) continue;
+    vistos.add(chave);
+    out.push({ n, meta, tipo });
   }
-  return [...map.entries()].sort((a, b) => a[0] - b[0]).map(([n, tipo]) => ({ n, tipo }));
+  return out;
 }
 
 function ProgramaPage() {
@@ -227,6 +239,38 @@ function ProgramaPage() {
   );
 }
 
+// Balão de ODS no estilo original; ao passar o mouse ou tocar, mostra a meta.
+function BadgeODS({ b }: { b: Badge }) {
+  const [aberto, setAberto] = useState(false);
+  const c = corOds(b.n);
+  const nome = nomeOds(b.n);
+  return (
+    <span className="relative inline-flex">
+      <button
+        type="button"
+        onClick={() => setAberto((v) => !v)}
+        onBlur={() => setAberto(false)}
+        aria-expanded={aberto}
+        className="peer inline-flex cursor-help items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-semibold outline-none transition-colors focus-visible:ring-2"
+        style={{ color: c, borderColor: `${c}55` }}
+      >
+        <span className="h-1.5 w-1.5 rounded-full" style={{ background: c }} />
+        ODS {b.n}
+        <span className="font-normal opacity-70">· {b.tipo}</span>
+      </button>
+      <span
+        role="tooltip"
+        className={`pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[240px] -translate-x-1/2 rounded-lg bg-foreground px-3 py-2 text-left text-[11px] leading-snug text-background shadow-lg transition-opacity duration-150 peer-hover:opacity-100 ${aberto ? "opacity-100" : "opacity-0"}`}
+      >
+        <span className="block font-bold">{b.meta}</span>
+        {nome && <span className="block opacity-75">ODS {b.n} · {nome}</span>}
+        <span className="block opacity-75">Aderência {b.tipo.toLowerCase()}</span>
+        <span className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-foreground" />
+      </span>
+    </span>
+  );
+}
+
 function Card({ d, cor }: { d: Dissertacao & { badges: Badge[] }; cor: string }) {
   const [aberto, setAberto] = useState(false);
   const temLink = !!d.link && /^https?:\/\//i.test(d.link);
@@ -239,19 +283,17 @@ function Card({ d, cor }: { d: Dissertacao & { badges: Badge[] }; cor: string })
             {d.ano}
           </span>
         )}
-        {d.badges.map((b) => (
-          <span
-            key={b.n}
-            className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 font-semibold"
-            style={{ color: corOds(b.n), borderColor: `${corOds(b.n)}55` }}
-            title={`ODS ${b.n} — aderência ${b.tipo.toLowerCase()}`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: corOds(b.n) }} />
-            ODS {b.n}
-            <span className="font-normal opacity-70">· {b.tipo}</span>
-          </span>
+        {d.badges.map((b, i) => (
+          <BadgeODS key={`${b.n}-${i}`} b={b} />
         ))}
       </div>
+
+      {d.badges.length > 0 && (
+        <p className="mt-2 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          <Info className="h-3 w-3 shrink-0" />
+          Passe o mouse ou toque nas ODS para ver as metas.
+        </p>
+      )}
 
       <h3 className="mt-3 text-base font-bold leading-snug text-foreground">{d.titulo}</h3>
 

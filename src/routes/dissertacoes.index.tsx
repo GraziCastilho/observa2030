@@ -113,7 +113,7 @@ function PanoramaPage() {
         <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary">
           Dissertações da Uergs • Panorama Geral
         </span>
-        <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+        <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-foreground text-justify sm:text-4xl">
           Panorama Geral: Análise da Aderência das Dissertações aos Objetivos de Desenvolvimento Sustentável
         </h1>
 
@@ -630,7 +630,7 @@ function PanoramaPage() {
 
 // ───────────────────────── componentes auxiliares ─────────────────────────
 function SecTitle({ children }: { children: ReactNode }) {
-  return <h2 className="mt-16 scroll-mt-20 text-2xl font-bold leading-snug text-foreground">{children}</h2>;
+  return <h2 className="mt-16 scroll-mt-20 text-2xl font-bold leading-snug text-foreground text-justify">{children}</h2>;
 }
 function P({ children }: { children: ReactNode }) {
   return <p className="mt-4 text-[1.0625rem] leading-relaxed text-justify text-muted-foreground">{children}</p>;
@@ -756,7 +756,7 @@ function Formula({ rotulo, num: numer, den, mult = "× 100", kappa = false }: { 
 function Metodologia() {
   return (
     <section className="mt-16">
-      <h2 className="scroll-mt-20 border-b pb-4 text-3xl font-bold tracking-tight text-foreground">Metodologia</h2>
+      <h2 className="scroll-mt-20 border-b pb-4 text-3xl font-bold tracking-tight text-foreground text-justify">Metodologia</h2>
       <p className="mt-6 font-semibold text-foreground">
         Metodologia de análise da aderência das dissertações da Uergs aos ODS
       </p>

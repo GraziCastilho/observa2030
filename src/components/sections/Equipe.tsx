@@ -65,7 +65,7 @@ export default function Equipe() {
   return (
     <section id="equipe" className="scroll-mt-24 bg-muted/50 py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Equipe</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">Equipe</h2>
         {!supabaseReady && <p className="mt-6 text-sm text-muted-foreground">Conteúdo indisponível no momento.</p>}
         {isLoading && <p className="mt-6 text-sm text-muted-foreground">Carregando equipe…</p>}
 

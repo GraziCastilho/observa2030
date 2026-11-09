@@ -89,10 +89,10 @@ function Index() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary">
               Iniciativa Uergs • Apoio CAPES
             </span>
-            <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
+            <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-foreground text-justify sm:text-4xl">
               Observa 2030 — Observatório Gaúcho da Agenda 2030 da Uergs
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-justify text-muted-foreground">
               O Observa 2030 mapeia, sistematiza e amplia a visibilidade dos Produtos Técnicos e Tecnológicos (PTTs) e dos Projetos de Extensão desenvolvidos pelos Programas de Pós-Graduação da Universidade Estadual do Rio Grande do Sul (UERGS), destacando sua contribuição e seu alinhamento aos Objetivos de Desenvolvimento Sustentável (ODS) da Agenda 2030.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -111,7 +111,7 @@ function Index() {
       </section>
       <section className="bg-muted/50 py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Explore o Observa 2030</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">Explore o Observa 2030</h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {previews.map((p) => (
               <article
@@ -126,7 +126,7 @@ function Index() {
                   <p.IconSVG />
                 </span>
                 <h3 className="mt-5 text-xl font-bold text-foreground">{p.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-justify text-muted-foreground">{p.description}</p>
                 <Link
                   to={p.href}
                   className="mt-6 inline-flex w-fit items-center rounded-full border px-5 py-2.5 text-sm font-semibold transition-all hover:text-white"

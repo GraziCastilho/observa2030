@@ -119,7 +119,7 @@ function ProgramaPage() {
 
   return (
     <SiteLayout>
-      <div className="mx-auto max-w-5xl px-4 py-16">
+      <div className="mx-auto max-w-6xl px-4 py-16">
         <Link to="/dissertacoes" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
           <ArrowLeft className="h-4 w-4" /> Panorama Geral
         </Link>
@@ -164,17 +164,17 @@ function ProgramaPage() {
             </div>
 
             {/* Textos de apresentação (documento base) */}
-            <div className="mx-auto mt-7 max-w-3xl space-y-4 border-t pt-7">
+            <div className="mt-7 space-y-4 border-t pt-7">
               {info.descricao.map((par, i) => (
-                <p key={i} className="leading-relaxed text-muted-foreground">{par}</p>
+                <p key={i} className="leading-relaxed text-justify text-muted-foreground">{par}</p>
               ))}
             </div>
           </div>
         </div>
 
         {/* Intro da lista (texto do documento) */}
-        <h2 className="mt-10 text-xl font-bold text-foreground">Dissertações do programa</h2>
-        <p className="mt-2 max-w-3xl leading-relaxed text-muted-foreground">{info.introLista}</p>
+        <h2 className="mt-10 text-xl font-bold text-foreground text-justify">Dissertações do programa</h2>
+        <p className="mt-2 leading-relaxed text-justify text-muted-foreground">{info.introLista}</p>
 
         {/* Busca + filtro por ODS */}
         <div className="mt-6 rounded-2xl border bg-card p-4 shadow-sm">
@@ -304,7 +304,7 @@ function Card({ d, cor }: { d: Dissertacao & { badges: Badge[] }; cor: string })
 
       {d.resumo && (
         <div className="mt-3">
-          <p className={`text-sm leading-relaxed text-foreground ${aberto ? "" : "line-clamp-4"}`}>{d.resumo}</p>
+          <p className={`text-sm leading-relaxed text-justify text-foreground ${aberto ? "" : "line-clamp-4"}`}>{d.resumo}</p>
           <button
             onClick={() => setAberto((v) => !v)}
             className="mt-2 inline-flex items-center gap-1 text-xs font-semibold"

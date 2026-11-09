@@ -38,8 +38,8 @@ export default function Publicacoes() {
   return (
     <section id="publicacoes" className="scroll-mt-24 bg-muted/50 py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Publicações</h2>
-        <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">
+        <h2 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">Publicações</h2>
+        <p className="mt-4 leading-relaxed text-justify text-muted-foreground">
           Esta seção reúne as publicações produzidas pelo Projeto Observa 2030, incluindo artigos científicos,
           livros, capítulos de livros, relatórios técnicos e textos publicados em jornais, revistas e sites
           institucionais.
@@ -119,7 +119,7 @@ export default function Publicacoes() {
                     <span className="inline-block w-fit rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
                       {CATS.find((c) => c.key === p.categoria)?.label}
                     </span>
-                    <p className="mt-3 leading-relaxed text-foreground">{p.referencia}</p>
+                    <p className="mt-3 leading-relaxed text-justify text-foreground">{p.referencia}</p>
 
                     <div className="mt-4 flex items-center gap-4">
                       {(p.doi || p.url) && (

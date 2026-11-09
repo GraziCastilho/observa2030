@@ -14,15 +14,15 @@ export default function Parcerias() {
 
   return (
     <section id="parcerias" className="scroll-mt-24 py-20">
-      <div className="mx-auto max-w-4xl px-4">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Parcerias</h2>
+      <div className="mx-auto max-w-6xl px-4">
+        <h2 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">Parcerias</h2>
         {!supabaseReady && <p className="mt-6 text-sm text-muted-foreground">Conteúdo indisponível no momento.</p>}
         {isLoading && <p className="mt-6 text-sm text-muted-foreground">Carregando parcerias…</p>}
 
         <div className="mt-10 space-y-14">
           {data.map((p) => (
             <article key={p.id}>
-              <h3 className="text-2xl font-bold text-foreground">{p.titulo}</h3>
+              <h3 className="text-2xl font-bold text-foreground text-justify">{p.titulo}</h3>
               {p.foto_url && (
                 <img
                   src={p.foto_url}
@@ -34,7 +34,7 @@ export default function Parcerias() {
               {p.descricao && (
                 <div className="mt-6 space-y-4">
                   {p.descricao.split(/\n+/).map((par, i) => (
-                    <p key={i} className="leading-relaxed text-foreground">
+                    <p key={i} className="leading-relaxed text-justify text-foreground">
                       {par}
                     </p>
                   ))}

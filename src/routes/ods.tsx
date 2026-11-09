@@ -42,10 +42,10 @@ const paramN = search["n"] as number;
   return (
     <SiteLayout>
       <div className="mx-auto max-w-6xl px-4 py-16">
-        <h1 className="text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">
           Objetivos de Desenvolvimento Sustentável
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground">
+        <p className="mt-4 text-justify text-muted-foreground">
           O Observa 2030 trabalha com os 17 ODS globais da ONU e os 3 ODS adjacentes brasileiros.
           Clique em cada objetivo para conhecer suas metas.
         </p>
@@ -76,12 +76,12 @@ const paramN = search["n"] as number;
                 <span className="text-sm font-bold uppercase tracking-wide" style={{ color: sel.cor }}>
                   ODS {sel.n}{sel.n >= 18 ? " — Adjacente" : ""}
                 </span>
-                <h2 className="text-2xl font-bold text-foreground">{sel.nome}</h2>
+                <h2 className="text-2xl font-bold text-foreground text-justify">{sel.nome}</h2>
               </div>
             </div>
             <div className="mt-6">
               <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">Objetivo</h3>
-              <p className="mt-2 text-lg leading-relaxed text-foreground">{sel.objetivo}</p>
+              <p className="mt-2 text-lg leading-relaxed text-justify text-foreground">{sel.objetivo}</p>
             </div>
             <div className="mt-6">
               <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">
@@ -91,7 +91,7 @@ const paramN = search["n"] as number;
                 {sel.metas.map((m, i) => (
                   <li key={i} className="flex gap-3">
                     <span className="mt-1 h-2 w-2 shrink-0 rounded-full" style={{ background: sel.cor }} />
-                    <p className="leading-relaxed text-foreground">{m}</p>
+                    <p className="leading-relaxed text-justify text-foreground">{m}</p>
                   </li>
                 ))}
               </ul>
@@ -123,7 +123,7 @@ const paramN = search["n"] as number;
             </button>
           ))}
         </div>
-          <div className="mt-16 rounded-2xl border bg-muted/40 p-6 text-xs leading-relaxed text-muted-foreground">
+          <div className="mt-16 rounded-2xl border bg-muted/40 p-6 text-xs leading-relaxed text-justify text-muted-foreground">
   <p className="mb-1 font-semibold text-foreground">Fontes</p>
   <p>
     <strong>ODS 1–17:</strong> ORGANIZAÇÃO DAS NAÇÕES UNIDAS (ONU). <em>Os Objetivos de Desenvolvimento Sustentável no Brasil.</em> Disponível em:{" "}

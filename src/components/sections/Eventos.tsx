@@ -66,8 +66,8 @@ export default function Eventos() {
   return (
     <section id="eventos" className="scroll-mt-24 py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Eventos</h2>
-        <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">
+        <h2 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">Eventos</h2>
+        <p className="mt-4 leading-relaxed text-justify text-muted-foreground">
           Esta seção apresenta os eventos, palestras, minicursos e ações extensionistas desenvolvidos ou com
           participação da equipe do Projeto Observa 2030.
         </p>

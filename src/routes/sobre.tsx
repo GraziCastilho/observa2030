@@ -43,11 +43,11 @@ const ICON_GMAIL     = "https://cdn-icons-png.flaticon.com/128/5968/5968534.png"
 function SobrePage() {
   return (
     <SiteLayout>
-      <div className="mx-auto max-w-5xl px-4 py-16">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Sobre o Projeto</h1>
+      <div className="mx-auto max-w-6xl px-4 py-16">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground text-justify sm:text-4xl">Sobre o Projeto</h1>
         {/* Seção A */}
         <section className="mt-12">
-          <h2 className="text-2xl font-bold text-foreground">
+          <h2 className="text-2xl font-bold text-foreground text-justify">
             A Universidade Estadual do Rio Grande do Sul (Uergs)
           </h2>
           <div className="my-4">
@@ -57,14 +57,14 @@ function SobrePage() {
               className="h-auto w-48"
             />
           </div>
-          <p className="mt-5 leading-relaxed text-foreground">
+          <p className="mt-5 leading-relaxed text-justify text-foreground">
             A Universidade Estadual do Rio Grande do Sul (Uergs) é uma instituição pública estadual fundada em
             2001 e que, em 2025, completa 24 anos de atuação no ensino superior gaúcho. Com sede em Porto
             Alegre, a Universidade possui 23 unidades universitárias organizadas em 7 campi regionais,
             distribuídos em diferentes regiões do estado, com destaque para unidades como Porto Alegre, Caxias
             do Sul, Guaíba, Litoral Norte – Osório, Erechim, Vacaria e Santana do Livramento, entre outras.
           </p>
-          <p className="mt-4 leading-relaxed text-foreground">
+          <p className="mt-4 leading-relaxed text-justify text-foreground">
             No âmbito da Pós-Graduação stricto sensu, a Uergs conta atualmente com cinco programas de
             Pós-Graduação (PPGSTEM, PPGAS, PPGCTA, PPGED e PPGSCBIO), que ofertam cursos de mestrado e, no caso
             do PPGED, também o primeiro doutorado da instituição. Sua atuação acadêmica concentra-se em três
@@ -97,14 +97,14 @@ function SobrePage() {
 
         {/* Seção B */}
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-foreground">O Projeto Observa 2030</h2>
-          <p className="mt-5 leading-relaxed text-foreground">
+          <h2 className="text-2xl font-bold text-foreground text-justify">O Projeto Observa 2030</h2>
+          <p className="mt-5 leading-relaxed text-justify text-foreground">
             O Projeto <em>"Observa 2030 – Observatório Gaúcho da Agenda 2030 da Uergs"</em>, aprovado em
             fevereiro de 2025 pela Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) pelo
             Edital Conjunto nº 3/2024 - Programa de Extensão da Educação Superior na Pós-Graduação (PROEXT-PG),
             é uma iniciativa importante que visa alinhar a Pós-Graduação com os ODS da ONU.
           </p>
-          <p className="mt-4 leading-relaxed text-foreground">
+          <p className="mt-4 leading-relaxed text-justify text-foreground">
             O Projeto Observa 2030 constitui-se como uma plataforma estratégica de inteligência institucional da
             Uergs, concebida para mapear, sistematizar e dar visibilidade à produção científica com potencial de
             impacto social. Estruturado como um observatório de práticas sustentáveis, o projeto atua na
@@ -114,16 +114,16 @@ function SobrePage() {
         </section>
         {/* Seção C */}
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-foreground">Eixos de Atuação</h2>
+          <h2 className="text-2xl font-bold text-foreground text-justify">Eixos de Atuação</h2>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <article className="rounded-2xl border-l-4 border-l-primary bg-card p-7 shadow-sm">
               <h3 className="font-bold text-foreground">Eixo 1 – Formativo | Foco Interno</h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground">
+              <p className="mt-3 text-sm leading-relaxed text-justify text-foreground">
                 <strong>Objetivo:</strong> Ampliar a capacidade dos pós-graduandos de comunicar os impactos das
                 pesquisas, projetos e produtos desenvolvidos no âmbito dos Programas de Pós-Graduação profissionais da UERGS.
               </p>
               <p className="mt-4 text-sm font-semibold text-foreground">Ações específicas:</p>
-              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-foreground">
+              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-justify text-foreground">
                 <li>• Fortalecimento de competências em comunicação científica;</li>
                 <li>• Incentivo à elaboração de resumos e produtos acadêmicos alinhados aos Objetivos de Desenvolvimento Sustentável (ODS);</li>
                 <li>• Oferta de atividades formativas por meio de cursos na modalidade MOOC <em>(Massive Open Online Courses)</em> e minicursos de extensão.</li>
@@ -131,11 +131,11 @@ function SobrePage() {
             </article>
             <article className="rounded-2xl border-l-4 border-l-primary bg-card p-7 shadow-sm">
               <h3 className="font-bold text-foreground">Eixo 2 – Sociedade | Foco Externo</h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground">
+              <p className="mt-3 text-sm leading-relaxed text-justify text-foreground">
                 <strong>Objetivo:</strong> Promover a popularização da ciência e fortalecer o diálogo entre a universidade e a sociedade.
               </p>
               <p className="mt-4 text-sm font-semibold text-foreground">Ações específicas:</p>
-              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-foreground">
+              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-justify text-foreground">
                 <li>• Participação e promoção de eventos científicos e extensionistas abertos à sociedade;</li>
                 <li>• Elaboração de materiais de divulgação e popularização científica;</li>
                 <li>• Fortalecimento da comunicação digital por meio de redes sociais e do site oficial do projeto, ampliando a visibilidade dos projetos e dos Produtos Técnicos e Tecnológicos (PTTs);</li>
@@ -147,7 +147,7 @@ function SobrePage() {
 
                 {/* Seção Objetivos */}
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-foreground">Nossos Objetivos</h2>
+          <h2 className="text-2xl font-bold text-foreground text-justify">Nossos Objetivos</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {OBJETIVOS.map((o) => (
               <article key={o.titulo} className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm">
@@ -157,7 +157,7 @@ function SobrePage() {
                   </span>
                   <div>
                     <h3 className="font-bold leading-tight" style={{ color: o.cor }}>{o.titulo}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{o.desc}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-justify text-muted-foreground">{o.desc}</p>
                   </div>
                 </div>
                 <span className="absolute bottom-0 right-0 h-8 w-8"
@@ -172,11 +172,11 @@ function SobrePage() {
           <img src={LOGO_OBSERVA} alt="Logo do Projeto Observa 2030" loading="lazy"
             className="mx-auto w-full max-w-[240px] object-contain" />
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Identidade Visual</h2>
-            <p className="mt-4 leading-relaxed text-foreground">
+            <h2 className="text-2xl font-bold text-foreground text-justify">Identidade Visual</h2>
+            <p className="mt-4 leading-relaxed text-justify text-foreground">
               A identidade visual do <strong>Observa 2030 Uergs</strong> comunica, de forma integrada, os principais propósitos do projeto:
             </p>
-            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground">
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-justify text-foreground">
               {IDENTIDADE.map(([label, text]) => (
                 <li key={label}>• <strong>{label}</strong> {text}</li>
               ))}
@@ -185,7 +185,7 @@ function SobrePage() {
         </section>
         {/* Seção E — Redes Sociais */}
         <section className="mt-16 rounded-2xl border bg-card p-8 shadow-sm">
-          <h2 className="text-2xl font-bold text-foreground">Redes Sociais e Contato</h2>
+          <h2 className="text-2xl font-bold text-foreground text-justify">Redes Sociais e Contato</h2>
           <ul className="mt-5 flex flex-wrap gap-4 text-sm">
             <li>
               <a href="https://www.instagram.com/observa2030uergs" target="_blank" rel="noreferrer"
